@@ -12,6 +12,10 @@ const AuthStateChangeProvider = ({ children }) => {
     Authentication().onAuthStateChanged((user) => {
       if (user) {
         // console.log("User is authenticated");
+        // SetUser({
+        //   email: user.email,
+        //   uid: user.uid,
+        // });
         getUser(user.uid)
           .then((res) => {
             SetUser({

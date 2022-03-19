@@ -14,6 +14,9 @@ export default function Login() {
 
     SignIn(user?.email, user?.password)
       .then((res) => {
+        document.cookie = `email=${user.email}; path=/`;
+        document.cookie = `uid=${res.user.uid}; path=/`;
+
         console.log(res);
         Router.push("/dashboard");
       })
