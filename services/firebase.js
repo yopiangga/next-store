@@ -26,15 +26,15 @@ export const Authentication = () => {
 };
 
 export const SignUp = async (email, password) => {
-  await createUserWithEmailAndPassword(FirebaseAuth, email, password);
+  return await createUserWithEmailAndPassword(FirebaseAuth, email, password);
 };
 
 export const SignIn = async (email, password) => {
-  await signInWithEmailAndPassword(FirebaseAuth, email, password);
+  return await signInWithEmailAndPassword(FirebaseAuth, email, password);
 };
 
 export const SignOut = async () => {
-  await signOut(FirebaseAuth);
+  return await signOut(FirebaseAuth);
 };
 
 export const GetSignInErrorMessage = (code) => {
