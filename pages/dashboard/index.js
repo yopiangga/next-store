@@ -1,3 +1,5 @@
+import withProtected from "hoc/withProtected";
+
 function Dashboard() {
   return (
     <main className="bg-gray-100 dark:bg-gray-800 h-screen overflow-hidden relative">
@@ -846,5 +848,5 @@ function Dashboard() {
   );
 }
 
-// export default withProtected(Dashboard)
-export default Dashboard;
+export default withProtected(Dashboard);
+// export default Dashboard;
