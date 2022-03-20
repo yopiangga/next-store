@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { InitialUserState, useUser } from "./user";
 import { Authentication } from "../services/firebase";
 import { getUser } from "services/user_services";
+import Image from "next/image";
+import loading from "public/loading.svg";
 
 const AuthStateChangeProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +45,11 @@ const AuthStateChangeProvider = ({ children }) => {
   }, []);
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Image src={loading} />
+      </div>
+    );
   } else {
     return children;
   }
