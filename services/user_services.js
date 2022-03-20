@@ -1,6 +1,14 @@
 import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app";
-import { doc, setDoc, getFirestore, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getFirestore,
+  getDoc,
+  getDocs,
+  collection,
+  deleteDoc,
+} from "firebase/firestore";
 
 export async function addUser(uid, name, email) {
   const db = getFirestore();
@@ -8,8 +16,8 @@ export async function addUser(uid, name, email) {
     uid: uid ?? "",
     name: name ?? "",
     email: email ?? "",
-    address: "",
-    phone: "",
+    address: "-",
+    phone: "-",
     cart: [],
     role: 2,
   });
@@ -28,4 +36,39 @@ export async function getUser(uid) {
     // console.log("No such document!");
     return null;
   }
+}
+
+export async function getUsers() {
+  const db = getFirestore();
+
+  const docSnap = await getDocs(collection(db, "users"));
+
+  const data = [];
+
+  docSnap.forEach((doc) => {
+    data.push({ id: doc.id, data: doc.data() });
+  });
+
+  return data;
+}
+
+export async function deteleUser(uid) {
+  const db = getFirestore();
+
+  const docRef = doc(db, "users", uid);
+  return await deleteDoc(docRef);
+}
+
+export async function countUser() {
+  const db = getFirestore();
+
+  const docSnap = await getDocs(collection(db, "users"));
+
+  const data = [];
+
+  docSnap.forEach((doc) => {
+    data.push(doc.id);
+  });
+
+  return data.length;
 }

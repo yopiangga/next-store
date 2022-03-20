@@ -54,17 +54,6 @@ export async function getProduct(id) {
 export async function editProduct(id, name, description, image, price, unit) {
   const db = getFirestore();
 
-  //   return await db
-  //     .collection("produts")
-  //     .doc(id)
-  //     .update({
-  //       name: name ?? "",
-  //       description: description ?? "",
-  //       image: image ?? "",
-  //       price: price ?? "",
-  //       unit: unit ?? "",
-  //     });
-
   return await updateDoc(doc(db, "products", id), {
     name: name ?? "",
     description: description ?? "",
@@ -72,4 +61,18 @@ export async function editProduct(id, name, description, image, price, unit) {
     price: price ?? "",
     unit: unit ?? "",
   });
+}
+
+export async function countProduct() {
+  const db = getFirestore();
+
+  const docSnap = await getDocs(collection(db, "products"));
+
+  const data = [];
+
+  docSnap.forEach((doc) => {
+    data.push(doc.id);
+  });
+
+  return data.length;
 }

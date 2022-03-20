@@ -1,9 +1,26 @@
 import withProtected from "hoc/withProtected";
 import LayoutDashboard from "layout/dashboard/index";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { getUsers, deteleUser } from "services/user_services";
 
 function DashboardUsers() {
-  const data = [{}, {}, {}, {}, {}, {}];
+  // const data = [{}, {}, {}, {}, {}, {}];
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getUsers()
+      .then((res) => {
+        setData(res);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+  }, []);
+
+  function handleDelete(id) {
+    deleteUser(id);
+  }
 
   return (
     <LayoutDashboard menuActive="2" title="Seluruh Pengguna">
@@ -18,28 +35,26 @@ function DashboardUsers() {
                   <th>Email</th>
                   <th>Alamat</th>
                   <th>No HP</th>
-                  <th>Aksi</th>
+                  <th>Keranjang</th>
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => {
+                {data.map((el, index) => {
                   return (
                     <tr key={index}>
                       <th>{index + 1}</th>
-                      <td>Cy Ganderton</td>
+                      <td>{el?.data?.name}</td>
                       <td>
-                        <td>yopiangga@gmail.com</td>
+                        <td>{el?.data?.email}</td>
                       </td>
                       <td>
-                        <td>Desa Gambyok Kecamatan Grogol</td>
+                        <td>{el?.data?.address}</td>
                       </td>
                       <td>
-                        <td>082330410865</td>
+                        <td>{el?.data?.phone}</td>
                       </td>
                       <td>
-                        <button className="btn btn-xs mx-1 btn-error">
-                          Hapus
-                        </button>
+                        <td>{el?.data?.cart.length}</td>
                       </td>
                     </tr>
                   );

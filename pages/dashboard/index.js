@@ -1,7 +1,29 @@
 import withProtected from "hoc/withProtected";
 import LayoutDashboard from "layout/dashboard/index";
+import { useState, useEffect } from "react";
+import { countProduct } from "services/product_services";
+import { countUser } from "services/user_services";
+import { countVisitor } from "services/visitor_services";
 
 function Dashboard() {
+  const [visitor, setVisitor] = useState("-");
+  const [user, setUser] = useState("-");
+  const [product, setProduct] = useState("-");
+  const [transaction, setTransaction] = useState("-");
+
+  useEffect(() => {
+    countVisitor().then((res) => {
+      setVisitor(res);
+    });
+    countUser().then((res) => {
+      setUser(res);
+    });
+    countProduct().then((res) => {
+      setProduct(res);
+    });
+    // countTransaction().then((res) => {setTransaction(res)});
+  }, []);
+
   return (
     <LayoutDashboard menuActive="0" title="Dashboard">
       <div className="overflow-auto h-screen pb-24 px-4 md:px-6">
@@ -16,7 +38,7 @@ function Dashboard() {
             <div className="">
               <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                 <p className="text-2xl text-black dark:text-white font-bold">
-                  12
+                  {visitor?.daily}
                 </p>
                 <p className="text-gray-400 text-sm">Pengunjung Harian</p>
               </div>
@@ -24,7 +46,7 @@ function Dashboard() {
             <div className="">
               <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                 <p className="text-2xl text-black dark:text-white font-bold">
-                  12
+                  {visitor?.all}
                 </p>
                 <p className="text-gray-400 text-sm">Seluruh Pengunjung</p>
               </div>
@@ -32,7 +54,7 @@ function Dashboard() {
             <div className="">
               <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                 <p className="text-2xl text-black dark:text-white font-bold">
-                  12
+                  {user}
                 </p>
                 <p className="text-gray-400 text-sm">Total Pengguna</p>
               </div>
@@ -40,7 +62,7 @@ function Dashboard() {
             <div className="">
               <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                 <p className="text-2xl text-black dark:text-white font-bold">
-                  12
+                  {product}
                 </p>
                 <p className="text-gray-400 text-sm">Total Produk</p>
               </div>
@@ -48,7 +70,7 @@ function Dashboard() {
             <div className="">
               <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative">
                 <p className="text-2xl text-black dark:text-white font-bold">
-                  12
+                  {transaction}
                 </p>
                 <p className="text-gray-400 text-sm">Total Transaksi</p>
               </div>
